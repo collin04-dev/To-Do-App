@@ -1,0 +1,141 @@
+<!doctype html>
+
+<html>
+
+	<head>
+
+		<title>To Do List</title>
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+		<style>
+
+			body {
+				text-align: center;
+				background-image: url(spacebackground.jpg);
+				background-repeat: no-repeat;
+				background-size: cover;
+				height: 100%;
+				font-family: 'Do Hyeon', sans-serif;
+			}
+
+			h1, h2 {
+				color: #fff;
+			}
+
+			.row {
+				margin-right: 20px;
+				margin-left: 20px;
+			}
+
+			ul {
+				list-style-position: inside;
+			}
+
+			.jumbotron {
+				background-image: url(backgroundspace.jpg);
+				opacity: 0.93;
+			}
+
+			.list-group-item {
+				background-color: #30302E;
+				color: #fff;
+			}
+
+			.space {
+				margin-bottom: 20px;
+			}
+
+		</style>
+
+	</head>
+
+
+	<body>
+
+		<div class="jumbotron jumbotron-fluid">
+			<div class="row">
+				<div class="col-sm-12">
+					<h1>Write Down Your Tasks Here!</h1>
+					<input type="text" name="new" id="new" class="form-control" placeholder="Please Add a Task">
+					<br>
+					<button type="button" class="btn btn-dark" onClick="addNewTask();">Add Task</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<h2>Current Tasks</h2>
+				<ul class="list-group" id="tasks"></ul>
+				<br>
+				<button type="button" class="space btn btn-dark" onClick="clearTasks();">Clear Tasks</button>
+			</div>
+		</div>
+
+		<script>
+
+			function init() {
+				let list = document.getElementById("tasks");
+				list.onclick = update;
+			}
+
+			function addNewTask() {
+				let addTask = document.getElementById("new");
+
+				if (addTask.value != "") {
+					let list = document.getElementById("tasks");
+					let li = document.createElement("li");
+					li.classList.add("list-group-item");
+					li.innerHTML = `<span id="delete" class="delete btn btn-outline-danger btn-sm">Delete</span>
+					<!--<input id ="done" type="checkbox" class="btn btn-outline-primary btn-sm">-->
+					<span id="done" class="done btn btn-outline-primary btn-sm">Complete</span>
+					<label>${addTask.value}</label>`;
+					list.appendChild(li);
+				}
+
+				addTask.value = null;
+			}
+
+			function update(event) {
+				if (event.target.id == "delete") {
+					let task = event.target.parentNode;
+					let list = task.parentNode;
+					list.removeChild(task);
+				}
+
+				if (event.target.id == "done") {
+					let button = event.target;
+					let task = button.nextSibling.nextSibling;
+
+					if (button) {
+						task.style.textDecoration = "line-through";
+						button.classList.remove("btn-outline-primary");
+						button.classList.add("btn-primary");
+
+					}
+						else {
+							task.style.textDecoration = "none";
+						}
+
+					}
+				}
+
+				function clearTasks() {
+					let list = document.getElementById("tasks");
+					list.innerHTML = null;
+				}
+
+			init();
+
+		</script>
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	</body>
+
+
+
+</html>
